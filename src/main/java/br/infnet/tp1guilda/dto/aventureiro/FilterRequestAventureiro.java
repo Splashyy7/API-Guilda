@@ -1,4 +1,4 @@
-package br.infnet.tp1guilda.dto;
+package br.infnet.tp1guilda.dto.aventureiro;
 
 import br.infnet.tp1guilda.enums.Classe;
 import jakarta.validation.constraints.Min;

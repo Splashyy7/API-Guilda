@@ -1,6 +1,11 @@
 package br.infnet.tp1guilda.controllers;
 
-import br.infnet.tp1guilda.service.ServiceAventureiro;
+import br.infnet.tp1guilda.dto.aventureiro.AtualizarAventureiro;
+import br.infnet.tp1guilda.dto.aventureiro.CriarAventureiro;
+import br.infnet.tp1guilda.dto.aventureiro.FilterRequestAventureiro;
+import br.infnet.tp1guilda.dto.aventureiro.ResponseAventureiro;
+import br.infnet.tp1guilda.dto.companheiro.DefinirCompanheiro;
+import br.infnet.tp1guilda.service.AventureiroService;
 import br.infnet.tp1guilda.dto.*;
 import br.infnet.tp1guilda.mapper.*;
 import br.infnet.tp1guilda.domain.aventura.Aventureiro;
@@ -21,8 +26,8 @@ import java.util.List;
 @Validated
 public class AventureiroController {
 
-    private final MapperAventureiro mapperAventureiro;
-    private final ServiceAventureiro serviceAventureiro;
+    private final AventureiroMapper mapperAventureiro;
+    private final AventureiroService serviceAventureiro;
 
     @PostMapping
     public ResponseEntity<ResponseAventureiro> registrarAventureiro(@RequestBody @Valid CriarAventureiro dto) {
@@ -41,7 +46,7 @@ public class AventureiroController {
             @RequestParam(defaultValue = "10") @Min(value = 1, message = "Size deve ser entre 1 e 50") @Max(value = 50, message = "Size deve ser entre 1 e 50") int size
     ) {
         FilterRequestAventureiro filtro = new FilterRequestAventureiro(classe, ativo, nivelMinimo);
-        PageResult<Aventureiro> resultado = serviceAventureiro.listar(filtro, page, size);
+        PaginatedView<Aventureiro> resultado = serviceAventureiro.listar(filtro, page, size);
 
         List<ResponseAventureiro> response = resultado.content()
                 .stream()

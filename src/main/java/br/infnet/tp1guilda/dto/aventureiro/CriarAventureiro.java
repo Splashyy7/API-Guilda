@@ -1,4 +1,4 @@
-package br.infnet.tp1guilda.dto;
+package br.infnet.tp1guilda.dto.aventureiro;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package br.infnet.tp1guilda.dto;
+package br.infnet.tp1guilda.dto.companheiro;
 
 import br.infnet.tp1guilda.enums.Especie;
 import jakarta.validation.constraints.NotBlank;

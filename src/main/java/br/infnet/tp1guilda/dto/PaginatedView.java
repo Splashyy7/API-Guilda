@@ -2,14 +2,14 @@ package br.infnet.tp1guilda.dto;
 
 import java.util.List;
 
-public record PageResult<T>(
+public record PaginatedView<T>(
         int page,
         int size,
         int total,
         int totalPages,
         List<T> content
 ) {
-    public PageResult(int page, int size, int total, List<T> content) {
+    public PaginatedView(int page, int size, int total, List<T> content) {
         this(
                 page,
                 Math.max(size, 1),

@@ -8,5 +8,7 @@ public class AventureiroNotFoundException extends RuntimeException {
 
     public AventureiroNotFoundException(Long id) {
         super("Aventureiro com ID " + id + " não foi encontrado na guilda!");
+
+        /* super(STR."Aventureiro com ID \{id} não foi encontrado.");*/
     }
 }

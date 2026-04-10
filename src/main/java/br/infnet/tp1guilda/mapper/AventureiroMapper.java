@@ -1,12 +1,12 @@
 package br.infnet.tp1guilda.mapper;
 
 import org.springframework.stereotype.Component;
-import br.infnet.tp1guilda.dto.CriarAventureiro;
+import br.infnet.tp1guilda.dto.aventureiro.CriarAventureiro;
 import br.infnet.tp1guilda.domain.aventura.Aventureiro;
-import br.infnet.tp1guilda.dto.ResponseAventureiro;
+import br.infnet.tp1guilda.dto.aventureiro.ResponseAventureiro;
 
 @Component
-public class MapperAventureiro {
+public class AventureiroMapper {
     public Aventureiro toEntity(CriarAventureiro dto) {
         return new Aventureiro(
                 dto.nome(),

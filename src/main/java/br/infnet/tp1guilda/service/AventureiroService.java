@@ -1,22 +1,22 @@
 package br.infnet.tp1guilda.service;
 
 import br.infnet.tp1guilda.domain.aventura.Aventureiro;
-import br.infnet.tp1guilda.repository.RepositoryAventureiro;
+import br.infnet.tp1guilda.repository.aventura.AventureiroRepository;
 import br.infnet.tp1guilda.exceptions.AventureiroNotFoundException;
 import br.infnet.tp1guilda.exceptions.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import br.infnet.tp1guilda.dto.AtualizarAventureiro;
-import br.infnet.tp1guilda.dto.FilterRequestAventureiro;
-import br.infnet.tp1guilda.dto.PageResult;
-import br.infnet.tp1guilda.dto.DefinirCompanheiro;
+import br.infnet.tp1guilda.dto.aventureiro.AtualizarAventureiro;
+import br.infnet.tp1guilda.dto.aventureiro.FilterRequestAventureiro;
+import br.infnet.tp1guilda.dto.PaginatedView;
+import br.infnet.tp1guilda.dto.companheiro.DefinirCompanheiro;
 import br.infnet.tp1guilda.domain.aventura.Companheiro;
 
 @Service
 @RequiredArgsConstructor
-public class ServiceAventureiro {
+public class AventureiroService {
 
-    private final RepositoryAventureiro repositoryAventureiro;
+    private final AventureiroRepository repositoryAventureiro;
 
     public Aventureiro criar(Aventureiro aventureiro) {
         return repositoryAventureiro.save(aventureiro);
@@ -82,7 +82,7 @@ public class ServiceAventureiro {
         return repositoryAventureiro.save(aventureiro);
     }
 
-    public PageResult<Aventureiro> listar(FilterRequestAventureiro filtro, int page, int size) {
+    public PaginatedView<Aventureiro> listar(FilterRequestAventureiro filtro, int page, int size) {
         return repositoryAventureiro.findWithFilter(filtro, page, size);
     }
 
