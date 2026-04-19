@@ -16,12 +16,12 @@ import java.time.OffsetDateTime;
 public class AuditEntry {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aventId")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auditId")
     @SequenceGenerator(
-            name = "aventId",
-            sequenceName = "avent_seq",
+            name = "auditId",
+            sequenceName = "audit_entries_id_seq",
             allocationSize = 1,
-            schema = "aventura"
+            schema = "audit"
     )
     private Long id;
 

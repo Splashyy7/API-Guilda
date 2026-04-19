@@ -26,12 +26,12 @@ import java.util.Set;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aventId")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roleId")
     @SequenceGenerator(
-            name = "aventId",
-            sequenceName = "avent_seq",
+            name = "roleId",
+            sequenceName = "roles_id_seq",
             allocationSize = 1,
-            schema = "aventura"
+            schema = "audit"
     )
     private Long id;
 

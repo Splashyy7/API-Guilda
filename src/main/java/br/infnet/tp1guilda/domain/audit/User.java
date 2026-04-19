@@ -27,12 +27,12 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aventId")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userId")
     @SequenceGenerator(
-            name = "aventId",
-            sequenceName = "avent_seq",
+            name = "userId",
+            sequenceName = "usuarios_id_seq",
             allocationSize = 1,
-            schema = "aventura"
+            schema = "audit"
     )
     private Long id;
 
