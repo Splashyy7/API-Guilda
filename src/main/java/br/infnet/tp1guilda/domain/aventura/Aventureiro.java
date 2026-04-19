@@ -19,7 +19,13 @@ import java.util.List;
 public class Aventureiro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aventId")
+    @SequenceGenerator(
+            name = "aventId",
+            sequenceName = "avent_sequence",
+            allocationSize = 1,
+            schema = "aventura"
+    )
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -15,7 +15,13 @@ import java.time.OffsetDateTime;
 public class Organization {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aventId")
+    @SequenceGenerator(
+            name = "aventId",
+            sequenceName = "avent_seq",
+            allocationSize = 1,
+            schema = "aventura"
+    )
     private Long id;
 
     @Column(name = "nome", nullable = false, length = 120, unique = true)
