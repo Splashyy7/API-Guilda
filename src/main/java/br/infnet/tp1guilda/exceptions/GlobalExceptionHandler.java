@@ -1,6 +1,7 @@
 package br.infnet.tp1guilda.exceptions;
 
 import br.infnet.tp1guilda.dto.*;
+import br.infnet.tp1guilda.exceptions.elastic.ElasticsearchComunicacaoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -58,6 +59,16 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ElasticsearchComunicacaoException.class)
+    public ResponseEntity<ErrorResponse> handleElasticsearchComunicacao(ElasticsearchComunicacaoException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.SERVICE_UNAVAILABLE.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(Exception.class)
