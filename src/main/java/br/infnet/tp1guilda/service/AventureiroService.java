@@ -23,9 +23,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AventureiroService {
 
     private final AventureiroRepository repositoryAventureiro;
@@ -36,6 +38,7 @@ public class AventureiroService {
 
     //Criar aventureiro
 
+    @Transactional
     public Aventureiro criar(CriarAventureiro dto) {
         Organization organizacao = organizationRepository.findById(dto.organizacaoId())
                 .orElseThrow(() -> new BusinessException("Organização não encontrada com id: " + dto.organizacaoId()));
@@ -54,6 +57,7 @@ public class AventureiroService {
 
     //update aventureiro
 
+    @Transactional
     public Aventureiro atualizar(Long id, AtualizarAventureiro update) {
 
         Aventureiro aventureiro = buscarPorId(id);
@@ -78,6 +82,7 @@ public class AventureiroService {
 
     //encerrar vinculo de aventureiro
 
+    @Transactional
     public Aventureiro encerrarVinculo(Long id) {
         Aventureiro aventureiro = buscarPorId(id);
 
@@ -91,6 +96,7 @@ public class AventureiroService {
 
     //recrutar aventureiro novamente
 
+    @Transactional
     public Aventureiro recrutarNovamente(Long id) {
         Aventureiro aventureiro = buscarPorId(id);
 
@@ -104,6 +110,7 @@ public class AventureiroService {
 
     //remover companheiro
 
+    @Transactional
     public Aventureiro removerCompanheiro(Long id) {
         Aventureiro aventureiro = buscarPorId(id);
 
@@ -145,6 +152,7 @@ public class AventureiroService {
 
     //definir companheiro
 
+    @Transactional
     public Aventureiro definirCompanheiro(Long id, DefinirCompanheiro dto) {
         Aventureiro aventureiro = buscarPorId(id);
 

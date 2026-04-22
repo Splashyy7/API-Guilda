@@ -45,11 +45,12 @@ public class ProdutoDocumentService {
     }
 
     public List<ProdutoLoja> buscarPorNomeComTolerancia(String nome) {
-        return search(Query.of(q -> q.fuzzy(f -> f
+        return search(MatchQuery.of(q -> q
                 .field("nome")
-                .value(nome)
+                .query(nome)
                 .fuzziness("AUTO")
-        )));
+                .fuzzyTranspositions(true)
+        )._toQuery());
     }
 
     public List<ProdutoLoja> buscarPorNomeEDescricao(String termo) {

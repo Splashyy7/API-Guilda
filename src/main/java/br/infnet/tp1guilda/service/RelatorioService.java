@@ -7,12 +7,14 @@ import br.infnet.tp1guilda.dto.relatorio.RelatorioMissao;
 import br.infnet.tp1guilda.repository.aventura.ParticipacaoMissaoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class RelatorioService {
 
     private final ParticipacaoMissaoRepository participacaoMissaoRepository;

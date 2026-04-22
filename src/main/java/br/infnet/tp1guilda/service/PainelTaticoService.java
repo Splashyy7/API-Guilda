@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -17,6 +18,7 @@ public class PainelTaticoService {
     private final PainelTaticoRepository painelTaticoRepository;
 
     @Cacheable("topMissoes15dias")
+    @Transactional(readOnly = true)
     public List<PainelTaticoMissaoMV> buscarMissoesRelevantes() {
         OffsetDateTime dataLimite = OffsetDateTime.now().minusDays(15);
         return painelTaticoRepository.findTopByUltimaAtualizacaoAfter(dataLimite, PageRequest.of(0, 10));
