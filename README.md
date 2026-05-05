@@ -1,13 +1,12 @@
 # API-Guilda
 
 [![Java 21](https://img.shields.io/badge/Java-21-007396?logo=openjdk&logoColor=white)](https://openjdk.org/projects/jdk/21/)
-[![Spring Boot 4.0.3](https://img.shields.io/badge/Spring%20Boot-4.0.3-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Spring Boot 4.0.6](https://img.shields.io/badge/Spring%20Boot-4.0.6-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Elasticsearch 8](https://img.shields.io/badge/Elasticsearch-8.x-005571?logo=elasticsearch&logoColor=white)](https://www.elastic.co/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-C71A36?logo=apachemaven&logoColor=white)](https://maven.apache.org/)
 [![OpenAPI 3](https://img.shields.io/badge/OpenAPI-3.0-6BA539?logo=openapiinitiative&logoColor=white)](https://swagger.io/specification/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-FE5196?logo=conventionalcommits&logoColor=white)](https://www.conventionalcommits.org)
 
 API REST de gestão de uma **Guilda de Aventureiros** — controle de aventureiros, missões, companheiros, relatórios analíticos e busca avançada de produtos da loja da guilda via Elasticsearch.
 
@@ -54,19 +53,19 @@ A guilda gerencia três subdomínios:
 
 ## Tecnologias
 
-| Categoria         | Stack                                                                 |
-|-------------------|-----------------------------------------------------------------------|
-| Linguagem         | Java 21 (com `--enable-preview`)                                      |
-| Framework         | Spring Boot 4.0.3                                                     |
-| Web               | Spring Web MVC + Bean Validation (Jakarta)                            |
-| Persistência      | Spring Data JPA + Hibernate                                           |
-| Banco de Dados    | PostgreSQL (multi-schema: `aventura`, `audit`, `operacoes`)           |
-| Busca/Indexação   | Spring Data Elasticsearch + cliente oficial `elasticsearch-java`      |
-| Cache             | Spring Cache + Caffeine                                               |
-| Documentação API  | Springdoc OpenAPI + Swagger UI                                        |
-| Build             | Maven (Maven Wrapper incluso)                                         |
-| Utilitários       | Lombok                                                                |
-| Testes            | Spring Boot Starter Test (JUnit 5)                                    |
+| Categoria         | Stack                                                            |
+|-------------------|------------------------------------------------------------------|
+| Linguagem         | Java 21                                                          |
+| Framework         | Spring Boot 4.0.6                                                |
+| Web               | Spring Web MVC + Bean Validation (Jakarta)                       |
+| Persistência      | Spring Data JPA + Hibernate                                      |
+| Banco de Dados    | PostgreSQL (multi-schema: `aventura`, `audit`, `operacoes`)      |
+| Busca/Indexação   | Spring Data Elasticsearch + cliente oficial `elasticsearch-java` |
+| Cache             | Spring Cache + Caffeine                                          |
+| Documentação API  | Springdoc OpenAPI + Swagger UI                                   |
+| Build             | Maven (Maven Wrapper incluso)                                    |
+| Utilitários       | Lombok                                                           |
+| Testes            | Spring Boot Starter Test (JUnit 5)                               |
 
 ---
 
@@ -100,10 +99,10 @@ src/main/java/br/infnet/tp1guilda
 │   └── ConfigCache.java              # CacheManager Caffeine (TTL 1d, max 100)
 │
 ├── controllers/
-│   ├── AventureiroController.java    # /aventureiros
-│   ├── MissaoController.java         # /missoes
-│   ├── ProdutoElasticController.java # /produtos (Elasticsearch)
-│   └── RelatorioController.java      # /relatorios
+│   ├── AventureiroController.java    # /api/v1/aventureiros
+│   ├── MissaoController.java         # /api/v1/missoes
+│   ├── ProdutoElasticController.java # /api/v1/produtos (Elasticsearch)
+│   └── RelatorioController.java      # /api/v1/relatorios
 │
 ├── domain/
 │   ├── aventura/                     # Aventureiro, Missao, ParticipacaoMissao, Companheiro (+ enums)
@@ -313,6 +312,14 @@ docker run -d --name api-guilda-postgres `
 
 > A senha `jpguild` casa com o `spring.datasource.password` em `application.properties`. Se você usar outra senha aqui, ajuste o `application.properties` (ou exporte via env var) também.
 
+> **⚠️ Atenção (imagem do TP):** A imagem `leogloriainfnet/postgres-tp2-spring` já vem com um cluster Postgres pré-inicializado, então a variável `POSTGRES_PASSWORD` é **ignorada** na primeira subida. Após subir o container, ajuste a senha do user `postgres` para que o Spring consiga conectar via TCP:
+>
+> ```powershell
+> docker exec api-guilda-postgres psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'jpguild';"
+> ```
+>
+> Isso só precisa ser feito uma vez — a alteração persiste no volume.
+
 ### 2. Subir o Elasticsearch (imagem do TP)
 
 ```powershell
@@ -399,7 +406,7 @@ Ou empacotando:
 
 ```powershell
 .\mvnw.cmd clean package
-java --enable-preview -jar target\TP2Guilda-0.0.1-SNAPSHOT.jar
+java -jar target\TP2Guilda-0.0.1-SNAPSHOT.jar
 ```
 
 A API sobe em **http://localhost:8080**.
@@ -442,7 +449,7 @@ springdoc.swagger-ui.tryItOutEnabled=true
 
 Testes presentes:
 - `Tp1GuildaApplicationTests` — smoke test de carga do contexto.
-- `audit/AuditMappingDataJpaTest` — `@DataJpaTest` validando o mapeamento das entidades de auditoria.
+- `audit/AuditMappingDataJpaTest` — `@SpringBootTest` (com cache desabilitado) validando o mapeamento das entidades de auditoria.
 
 ---
 
