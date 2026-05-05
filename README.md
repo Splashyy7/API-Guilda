@@ -76,19 +76,19 @@ Arquitetura em camadas clássica (Controller → Service → Repository → Doma
 
 ```mermaid
 flowchart LR
-    Client([Cliente HTTP]) -->|/api/v1/**| Controllers
+    Client(["Cliente HTTP"]) -->|"/api/v1/**"| Controllers
 
-    subgraph App[Spring Boot 4 · Java 21]
+    subgraph App["Spring Boot 4 · Java 21"]
         Controllers --> Services
         Services --> Mappers
         Services --> Repositories
-        Services -->|@Cacheable| Cache[(Caffeine<br/>TTL 24h)]
+        Services -->|"@Cacheable"| Cache[("Caffeine<br/>TTL 24h")]
     end
 
-    Repositories -->|JPA/Hibernate| Postgres[(PostgreSQL<br/>schemas: aventura · audit · operacoes)]
-    Services -->|Spring Data ES + cliente oficial| Elastic[(Elasticsearch<br/>índice guilda_loja)]
+    Repositories -->|"JPA/Hibernate"| Postgres[("PostgreSQL<br/>schemas: aventura · audit · operacoes")]
+    Services -->|"Spring Data ES"| Elastic[("Elasticsearch<br/>índice guilda_loja")]
 
-    Postgres -.->|materialized view| MV[vw_painel_tatico_missao]
+    Postgres -.->|"materialized view"| MV["vw_painel_tatico_missao"]
     MV --> Repositories
 ```
 
