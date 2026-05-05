@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping("/api/v1/produtos")
 @RequiredArgsConstructor
 @Tag(name = "Produtos (Elasticsearch)", description = "Busca textual e agregações no índice guilda_loja")
 public class ProdutoElasticController {

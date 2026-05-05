@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "API-Guilda",
-    "description": "Coleção completa dos endpoints da API-Guilda (TP2 Spring).\n\nUse a variável `{{baseUrl}}` (default: http://localhost:8080) para alternar entre ambientes.\n\nIDs de exemplo (1001, etc) batem com o seed.sql do projeto.",
+    "description": "Coleção completa dos endpoints da API-Guilda.\n\nTodos os endpoints são versionados sob `/api/v1`.\n\nUse a variável `{{baseUrl}}` (default: http://localhost:8080) para alternar entre ambientes.\n\nIDs de exemplo (1001, etc) batem com o seed.sql do projeto.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -47,9 +47,9 @@
               "raw": "{\n  \"organizacaoId\": {{organizacaoId}},\n  \"usuarioId\": {{usuarioId}},\n  \"nome\": \"Novo Aventureiro\",\n  \"classe\": \"GUERREIRO\",\n  \"nivel\": 5\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/aventureiros",
+              "raw": "{{baseUrl}}/api/v1/aventureiros",
               "host": ["{{baseUrl}}"],
-              "path": ["aventureiros"]
+              "path": ["api", "v1","aventureiros"]
             },
             "description": "Classes válidas: GUERREIRO, MAGO, ARQUEIRO, CLERIGO, LADINO. nivel >= 1."
           }
@@ -59,9 +59,9 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/aventureiros?classe=GUERREIRO&ativo=true&nivelMinimo=1&page=0&size=10&sort=nome&direction=asc",
+              "raw": "{{baseUrl}}/api/v1/aventureiros?classe=GUERREIRO&ativo=true&nivelMinimo=1&page=0&size=10&sort=nome&direction=asc",
               "host": ["{{baseUrl}}"],
-              "path": ["aventureiros"],
+              "path": ["api", "v1","aventureiros"],
               "query": [
                 { "key": "classe", "value": "GUERREIRO", "description": "GUERREIRO | MAGO | ARQUEIRO | CLERIGO | LADINO", "disabled": true },
                 { "key": "ativo", "value": "true", "disabled": true },
@@ -80,9 +80,9 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/aventureiros/busca?nome=Thaelin&page=0&size=10&sort=nome&direction=asc",
+              "raw": "{{baseUrl}}/api/v1/aventureiros/busca?nome=Thaelin&page=0&size=10&sort=nome&direction=asc",
               "host": ["{{baseUrl}}"],
-              "path": ["aventureiros", "busca"],
+              "path": ["api", "v1","aventureiros", "busca"],
               "query": [
                 { "key": "nome", "value": "Thaelin" },
                 { "key": "page", "value": "0" },
@@ -99,9 +99,9 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/aventureiros/{{aventureiroId}}",
+              "raw": "{{baseUrl}}/api/v1/aventureiros/{{aventureiroId}}",
               "host": ["{{baseUrl}}"],
-              "path": ["aventureiros", "{{aventureiroId}}"]
+              "path": ["api", "v1","aventureiros", "{{aventureiroId}}"]
             }
           }
         },
@@ -110,9 +110,9 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/aventureiros/{{aventureiroId}}/completo",
+              "raw": "{{baseUrl}}/api/v1/aventureiros/{{aventureiroId}}/completo",
               "host": ["{{baseUrl}}"],
-              "path": ["aventureiros", "{{aventureiroId}}", "completo"]
+              "path": ["api", "v1","aventureiros", "{{aventureiroId}}", "completo"]
             },
             "description": "Inclui totais e última missão."
           }
@@ -129,9 +129,9 @@
               "raw": "{\n  \"nome\": \"Nome Atualizado\",\n  \"classe\": \"MAGO\",\n  \"nivel\": 12\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/aventureiros/{{aventureiroId}}",
+              "raw": "{{baseUrl}}/api/v1/aventureiros/{{aventureiroId}}",
               "host": ["{{baseUrl}}"],
-              "path": ["aventureiros", "{{aventureiroId}}"]
+              "path": ["api", "v1","aventureiros", "{{aventureiroId}}"]
             },
             "description": "Todos os campos do body são opcionais."
           }
@@ -141,9 +141,9 @@
           "request": {
             "method": "PATCH",
             "url": {
-              "raw": "{{baseUrl}}/aventureiros/{{aventureiroId}}/encerrar-vinculo",
+              "raw": "{{baseUrl}}/api/v1/aventureiros/{{aventureiroId}}/encerrar-vinculo",
               "host": ["{{baseUrl}}"],
-              "path": ["aventureiros", "{{aventureiroId}}", "encerrar-vinculo"]
+              "path": ["api", "v1","aventureiros", "{{aventureiroId}}", "encerrar-vinculo"]
             },
             "description": "Inativa o aventureiro (ativo=false)."
           }
@@ -153,9 +153,9 @@
           "request": {
             "method": "PATCH",
             "url": {
-              "raw": "{{baseUrl}}/aventureiros/{{aventureiroId}}/recrutar",
+              "raw": "{{baseUrl}}/api/v1/aventureiros/{{aventureiroId}}/recrutar",
               "host": ["{{baseUrl}}"],
-              "path": ["aventureiros", "{{aventureiroId}}", "recrutar"]
+              "path": ["api", "v1","aventureiros", "{{aventureiroId}}", "recrutar"]
             },
             "description": "Reativa o aventureiro (ativo=true)."
           }
@@ -172,9 +172,9 @@
               "raw": "{\n  \"nome\": \"Faisca\",\n  \"especie\": \"DRAGAO_MINIATURA\",\n  \"lealdade\": 90\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/aventureiros/{{aventureiroId}}/companheiro",
+              "raw": "{{baseUrl}}/api/v1/aventureiros/{{aventureiroId}}/companheiro",
               "host": ["{{baseUrl}}"],
-              "path": ["aventureiros", "{{aventureiroId}}", "companheiro"]
+              "path": ["api", "v1","aventureiros", "{{aventureiroId}}", "companheiro"]
             },
             "description": "Espécies: LOBO, CORUJA, GOLEM, DRAGAO_MINIATURA. Lealdade: 0..100."
           }
@@ -184,9 +184,9 @@
           "request": {
             "method": "PATCH",
             "url": {
-              "raw": "{{baseUrl}}/aventureiros/{{aventureiroId}}/remover-companheiro",
+              "raw": "{{baseUrl}}/api/v1/aventureiros/{{aventureiroId}}/remover-companheiro",
               "host": ["{{baseUrl}}"],
-              "path": ["aventureiros", "{{aventureiroId}}", "remover-companheiro"]
+              "path": ["api", "v1","aventureiros", "{{aventureiroId}}", "remover-companheiro"]
             }
           }
         }
@@ -200,9 +200,9 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/missoes?status=EM_ANDAMENTO&nivelPerigo=ALTO&dataInicio=2026-01-01T00:00:00Z&dataFim=2026-12-31T23:59:59Z&page=0&size=10&sort=createdAt&direction=desc",
+              "raw": "{{baseUrl}}/api/v1/missoes?status=EM_ANDAMENTO&nivelPerigo=ALTO&dataInicio=2026-01-01T00:00:00Z&dataFim=2026-12-31T23:59:59Z&page=0&size=10&sort=createdAt&direction=desc",
               "host": ["{{baseUrl}}"],
-              "path": ["missoes"],
+              "path": ["api", "v1","missoes"],
               "query": [
                 { "key": "status", "value": "EM_ANDAMENTO", "description": "PLANEJADA | EM_ANDAMENTO | CONCLUIDA | CANCELADA", "disabled": true },
                 { "key": "nivelPerigo", "value": "ALTO", "description": "BAIXO | MEDIO | ALTO | EXTREMO", "disabled": true },
@@ -221,9 +221,9 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/missoes/top15dias",
+              "raw": "{{baseUrl}}/api/v1/missoes/top15dias",
               "host": ["{{baseUrl}}"],
-              "path": ["missoes", "top15dias"]
+              "path": ["api", "v1","missoes", "top15dias"]
             },
             "description": "Lê da materialized view `operacoes.vw_painel_tatico_missao`. Cacheado por 24h via Caffeine."
           }
@@ -233,9 +233,9 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/missoes/{{missaoId}}",
+              "raw": "{{baseUrl}}/api/v1/missoes/{{missaoId}}",
               "host": ["{{baseUrl}}"],
-              "path": ["missoes", "{{missaoId}}"]
+              "path": ["api", "v1","missoes", "{{missaoId}}"]
             }
           }
         }
@@ -249,9 +249,9 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/relatorios/ranking?dataInicio=2026-01-01T00:00:00Z&dataFim=2026-12-31T23:59:59Z&statusMissao=CONCLUIDA",
+              "raw": "{{baseUrl}}/api/v1/relatorios/ranking?dataInicio=2026-01-01T00:00:00Z&dataFim=2026-12-31T23:59:59Z&statusMissao=CONCLUIDA",
               "host": ["{{baseUrl}}"],
-              "path": ["relatorios", "ranking"],
+              "path": ["api", "v1","relatorios", "ranking"],
               "query": [
                 { "key": "dataInicio", "value": "2026-01-01T00:00:00Z", "disabled": true },
                 { "key": "dataFim", "value": "2026-12-31T23:59:59Z", "disabled": true },
@@ -266,9 +266,9 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/relatorios/missoes?dataInicio=2026-01-01T00:00:00Z&dataFim=2026-12-31T23:59:59Z",
+              "raw": "{{baseUrl}}/api/v1/relatorios/missoes?dataInicio=2026-01-01T00:00:00Z&dataFim=2026-12-31T23:59:59Z",
               "host": ["{{baseUrl}}"],
-              "path": ["relatorios", "missoes"],
+              "path": ["api", "v1","relatorios", "missoes"],
               "query": [
                 { "key": "dataInicio", "value": "2026-01-01T00:00:00Z", "disabled": true },
                 { "key": "dataFim", "value": "2026-12-31T23:59:59Z", "disabled": true }
@@ -289,9 +289,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/busca/nome?termo=espada",
+                  "raw": "{{baseUrl}}/api/v1/produtos/busca/nome?termo=espada",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "busca", "nome"],
+                  "path": ["api", "v1","produtos", "busca", "nome"],
                   "query": [{ "key": "termo", "value": "espada" }]
                 }
               }
@@ -301,9 +301,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/busca/descricao?termo=poção",
+                  "raw": "{{baseUrl}}/api/v1/produtos/busca/descricao?termo=poção",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "busca", "descricao"],
+                  "path": ["api", "v1","produtos", "busca", "descricao"],
                   "query": [{ "key": "termo", "value": "poção" }]
                 }
               }
@@ -313,9 +313,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/busca/frase?termo=cura instantanea",
+                  "raw": "{{baseUrl}}/api/v1/produtos/busca/frase?termo=cura instantanea",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "busca", "frase"],
+                  "path": ["api", "v1","produtos", "busca", "frase"],
                   "query": [{ "key": "termo", "value": "cura instantanea" }]
                 }
               }
@@ -325,9 +325,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/busca/fuzzy?termo=espda",
+                  "raw": "{{baseUrl}}/api/v1/produtos/busca/fuzzy?termo=espda",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "busca", "fuzzy"],
+                  "path": ["api", "v1","produtos", "busca", "fuzzy"],
                   "query": [{ "key": "termo", "value": "espda", "description": "typo proposital — fuzzy AUTO" }]
                 }
               }
@@ -337,9 +337,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/busca/multicampos?termo=fogo",
+                  "raw": "{{baseUrl}}/api/v1/produtos/busca/multicampos?termo=fogo",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "busca", "multicampos"],
+                  "path": ["api", "v1","produtos", "busca", "multicampos"],
                   "query": [{ "key": "termo", "value": "fogo" }]
                 }
               }
@@ -349,9 +349,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/busca/com-filtro?termo=cura&categoria=pocao",
+                  "raw": "{{baseUrl}}/api/v1/produtos/busca/com-filtro?termo=cura&categoria=pocao",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "busca", "com-filtro"],
+                  "path": ["api", "v1","produtos", "busca", "com-filtro"],
                   "query": [
                     { "key": "termo", "value": "cura" },
                     { "key": "categoria", "value": "pocao" }
@@ -364,9 +364,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/busca/faixa-preco?min=100&max=500",
+                  "raw": "{{baseUrl}}/api/v1/produtos/busca/faixa-preco?min=100&max=500",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "busca", "faixa-preco"],
+                  "path": ["api", "v1","produtos", "busca", "faixa-preco"],
                   "query": [
                     { "key": "min", "value": "100" },
                     { "key": "max", "value": "500" }
@@ -379,9 +379,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/busca/avancada?categoria=arma&raridade=epico&min=200&max=1000",
+                  "raw": "{{baseUrl}}/api/v1/produtos/busca/avancada?categoria=arma&raridade=epico&min=200&max=1000",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "busca", "avancada"],
+                  "path": ["api", "v1","produtos", "busca", "avancada"],
                   "query": [
                     { "key": "categoria", "value": "arma" },
                     { "key": "raridade", "value": "epico" },
@@ -401,9 +401,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/agregacoes/por-categoria",
+                  "raw": "{{baseUrl}}/api/v1/produtos/agregacoes/por-categoria",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "agregacoes", "por-categoria"]
+                  "path": ["api", "v1","produtos", "agregacoes", "por-categoria"]
                 }
               }
             },
@@ -412,9 +412,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/agregacoes/por-raridade",
+                  "raw": "{{baseUrl}}/api/v1/produtos/agregacoes/por-raridade",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "agregacoes", "por-raridade"]
+                  "path": ["api", "v1","produtos", "agregacoes", "por-raridade"]
                 }
               }
             },
@@ -423,9 +423,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/agregacoes/preco-medio",
+                  "raw": "{{baseUrl}}/api/v1/produtos/agregacoes/preco-medio",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "agregacoes", "preco-medio"]
+                  "path": ["api", "v1","produtos", "agregacoes", "preco-medio"]
                 }
               }
             },
@@ -434,9 +434,9 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "{{baseUrl}}/produtos/agregacoes/faixas-preco",
+                  "raw": "{{baseUrl}}/api/v1/produtos/agregacoes/faixas-preco",
                   "host": ["{{baseUrl}}"],
-                  "path": ["produtos", "agregacoes", "faixas-preco"]
+                  "path": ["api", "v1","produtos", "agregacoes", "faixas-preco"]
                 },
                 "description": "Faixas: <100, 100–300, 300–700, >700."
               }

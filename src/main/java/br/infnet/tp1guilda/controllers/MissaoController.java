@@ -24,7 +24,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/missoes")
+@RequestMapping("/api/v1/missoes")
 @RequiredArgsConstructor
 @Tag(name = "Missões", description = "Listagem de missões e painel tático cacheado")
 public class MissaoController {

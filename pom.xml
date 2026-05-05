@@ -11,20 +11,28 @@
     <groupId>br.infnet</groupId>
     <artifactId>TP2Guilda</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>TP1Guilda</name>
-    <description>TP1Guilda</description>
-    <url/>
+    <name>API-Guilda</name>
+    <description>API REST de gestão de uma Guilda de Aventureiros — aventureiros, missões, relatórios analíticos e busca avançada via Elasticsearch.</description>
+    <url>https://github.com/Splashyy7/API-Guilda</url>
     <licenses>
-        <license/>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
     </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <id>Splashyy7</id>
+            <name>João Pedro Oliveira Gritz de Oliveira</name>
+            <email>jpedrooliveiragritz@gmail.com</email>
+        </developer>
     </developers>
     <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
+        <connection>scm:git:https://github.com/Splashyy7/API-Guilda.git</connection>
+        <developerConnection>scm:git:git@github.com:Splashyy7/API-Guilda.git</developerConnection>
+        <url>https://github.com/Splashyy7/API-Guilda</url>
+        <tag>HEAD</tag>
     </scm>
     <properties>
         <java.version>21</java.version>
@@ -96,7 +104,6 @@
                     </annotationProcessorPaths>
                     <source>21</source>
                     <target>21</target>
-                    <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
             <plugin>

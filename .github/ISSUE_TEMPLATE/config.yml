@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Dúvidas de uso da API
+    url: https://github.com/Splashyy7/API-Guilda/discussions
+    about: Para perguntas gerais sobre como usar a API, prefira abrir uma Discussion.

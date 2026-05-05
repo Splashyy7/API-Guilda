@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/aventureiros")
+@RequestMapping("/api/v1/aventureiros")
 @RequiredArgsConstructor
 @Validated
 @Tag(name = "Aventureiros", description = "Cadastro e ciclo de vida dos aventureiros (recrutar, encerrar, companheiro)")

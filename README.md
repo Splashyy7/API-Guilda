@@ -1,6 +1,17 @@
 # API-Guilda
 
+[![Java 21](https://img.shields.io/badge/Java-21-007396?logo=openjdk&logoColor=white)](https://openjdk.org/projects/jdk/21/)
+[![Spring Boot 4.0.3](https://img.shields.io/badge/Spring%20Boot-4.0.3-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Elasticsearch 8](https://img.shields.io/badge/Elasticsearch-8.x-005571?logo=elasticsearch&logoColor=white)](https://www.elastic.co/)
+[![Maven](https://img.shields.io/badge/Maven-3.9+-C71A36?logo=apachemaven&logoColor=white)](https://maven.apache.org/)
+[![OpenAPI 3](https://img.shields.io/badge/OpenAPI-3.0-6BA539?logo=openapiinitiative&logoColor=white)](https://swagger.io/specification/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-FE5196?logo=conventionalcommits&logoColor=white)](https://www.conventionalcommits.org)
+
 API REST de gestão de uma **Guilda de Aventureiros** — controle de aventureiros, missões, companheiros, relatórios analíticos e busca avançada de produtos da loja da guilda via Elasticsearch.
+
+> Todos os endpoints são versionados sob `/api/v1`.
 
 ---
 
@@ -16,6 +27,7 @@ API REST de gestão de uma **Guilda de Aventureiros** — controle de aventureir
 - [Como Rodar](#como-rodar)
 - [Configuração](#configuração)
 - [Testes](#testes)
+- [Licença](#licença)
 
 ---
 
@@ -61,6 +73,24 @@ A guilda gerencia três subdomínios:
 ## Arquitetura & Estrutura do Projeto
 
 Arquitetura em camadas clássica (Controller → Service → Repository → Domain), com mappers dedicados entre DTOs e entidades, tratamento global de exceções e separação por subdomínio.
+
+```mermaid
+flowchart LR
+    Client([Cliente HTTP]) -->|/api/v1/**| Controllers
+
+    subgraph App[Spring Boot 4 · Java 21]
+        Controllers --> Services
+        Services --> Mappers
+        Services --> Repositories
+        Services -->|@Cacheable| Cache[(Caffeine<br/>TTL 24h)]
+    end
+
+    Repositories -->|JPA/Hibernate| Postgres[(PostgreSQL<br/>schemas: aventura · audit · operacoes)]
+    Services -->|Spring Data ES + cliente oficial| Elastic[(Elasticsearch<br/>índice guilda_loja)]
+
+    Postgres -.->|materialized view| MV[vw_painel_tatico_missao]
+    MV --> Repositories
+```
 
 ```
 src/main/java/br/infnet/tp1guilda
@@ -117,6 +147,23 @@ src/main/java/br/infnet/tp1guilda
 
 ## Modelo de Dados
 
+```mermaid
+erDiagram
+    ORGANIZACAO ||--o{ USUARIO : "possui"
+    ORGANIZACAO ||--o{ AVENTUREIRO : "possui"
+    ORGANIZACAO ||--o{ MISSAO : "possui"
+    USUARIO ||--o{ AVENTUREIRO : "cadastra"
+    USUARIO }o--o{ ROLE : "user_roles"
+    ROLE }o--o{ PERMISSION : "role_permissions"
+    USUARIO ||--o{ APIKEY : "emite"
+    USUARIO ||--o{ AUDIT_ENTRY : "executa"
+
+    AVENTUREIRO ||--o| COMPANHEIRO : "(embedded)"
+    AVENTUREIRO ||--o{ PARTICIPACAO_MISSAO : "participa"
+    MISSAO ||--o{ PARTICIPACAO_MISSAO : "tem"
+    MISSAO ||--o| VW_PAINEL_TATICO : "agregado por"
+```
+
 ### Schema `aventura`
 - **`aventureiros`** — id, organizacao_id, cadastrado_por_id, nome, classe, nivel, ativo, **companheiro_*** (embedded), createdAt, updatedAt.
 - **`missoes`** — id, organizacao_id, titulo, nivel_perigo, status, data_inicio, data_termino, createdAt.
@@ -137,48 +184,48 @@ src/main/java/br/infnet/tp1guilda
 
 > Convenção: respostas paginadas trazem os headers `X-Total-Count`, `X-Page`, `X-Size`, `X-Total-Pages`.
 
-### `/aventureiros`
+### `/api/v1/aventureiros`
 | Método  | Path                                   | Descrição                                   |
 |---------|----------------------------------------|---------------------------------------------|
-| POST    | `/aventureiros`                        | Registrar aventureiro                       |
-| GET     | `/aventureiros`                        | Listar com filtros (`classe`, `ativo`, `nivelMinimo`) e paginação |
-| GET     | `/aventureiros/busca?nome=`            | Busca por nome (LIKE case-insensitive)      |
-| GET     | `/aventureiros/{id}`                   | Buscar por id                               |
-| GET     | `/aventureiros/{id}/completo`          | Visão completa (totais + última missão)     |
-| PATCH   | `/aventureiros/{id}`                   | Atualização parcial (nome / classe / nível) |
-| PATCH   | `/aventureiros/{id}/encerrar-vinculo`  | Inativar                                    |
-| PATCH   | `/aventureiros/{id}/recrutar`          | Reativar                                    |
-| PUT     | `/aventureiros/{id}/companheiro`       | Definir companheiro                         |
-| PATCH   | `/aventureiros/{id}/remover-companheiro` | Remover companheiro                       |
+| POST    | `/api/v1/aventureiros`                        | Registrar aventureiro                       |
+| GET     | `/api/v1/aventureiros`                        | Listar com filtros (`classe`, `ativo`, `nivelMinimo`) e paginação |
+| GET     | `/api/v1/aventureiros/busca?nome=`            | Busca por nome (LIKE case-insensitive)      |
+| GET     | `/api/v1/aventureiros/{id}`                   | Buscar por id                               |
+| GET     | `/api/v1/aventureiros/{id}/completo`          | Visão completa (totais + última missão)     |
+| PATCH   | `/api/v1/aventureiros/{id}`                   | Atualização parcial (nome / classe / nível) |
+| PATCH   | `/api/v1/aventureiros/{id}/encerrar-vinculo`  | Inativar                                    |
+| PATCH   | `/api/v1/aventureiros/{id}/recrutar`          | Reativar                                    |
+| PUT     | `/api/v1/aventureiros/{id}/companheiro`       | Definir companheiro                         |
+| PATCH   | `/api/v1/aventureiros/{id}/remover-companheiro` | Remover companheiro                       |
 
-### `/missoes`
-| Método | Path                          | Descrição                                                                 |
-|--------|-------------------------------|---------------------------------------------------------------------------|
-| GET    | `/missoes`                    | Listar com filtros (`status`, `nivelPerigo`, `dataInicio`, `dataFim`)     |
-| GET    | `/missoes/{id}`               | Buscar detalhado por id                                                   |
-| GET    | `/missoes/top15dias`          | Top missões mais relevantes dos últimos 15 dias (cacheado 24h)            |
+### `/api/v1/missoes`
+| Método | Path                                 | Descrição                                                                 |
+|--------|--------------------------------------|---------------------------------------------------------------------------|
+| GET    | `/api/v1/missoes`                    | Listar com filtros (`status`, `nivelPerigo`, `dataInicio`, `dataFim`)     |
+| GET    | `/api/v1/missoes/{id}`               | Buscar detalhado por id                                                   |
+| GET    | `/api/v1/missoes/top15dias`          | Top missões mais relevantes dos últimos 15 dias (cacheado 24h)            |
 
-### `/relatorios`
-| Método | Path                  | Descrição                                          |
-|--------|-----------------------|----------------------------------------------------|
-| GET    | `/relatorios/ranking` | Ranking de aventureiros (filtros opcionais de data e status de missão) |
-| GET    | `/relatorios/missoes` | Relatório agregado de missões por período          |
+### `/api/v1/relatorios`
+| Método | Path                         | Descrição                                          |
+|--------|------------------------------|----------------------------------------------------|
+| GET    | `/api/v1/relatorios/ranking` | Ranking de aventureiros (filtros opcionais de data e status de missão) |
+| GET    | `/api/v1/relatorios/missoes` | Relatório agregado de missões por período          |
 
-### `/produtos` (Elasticsearch)
-| Método | Path                                  | Descrição                                            |
-|--------|---------------------------------------|------------------------------------------------------|
-| GET    | `/produtos/busca/nome?termo=`         | Match no campo `nome`                                |
-| GET    | `/produtos/busca/descricao?termo=`    | Match em `descricao`                                 |
-| GET    | `/produtos/busca/frase?termo=`        | Match phrase exata em `descricao`                    |
-| GET    | `/produtos/busca/fuzzy?termo=`        | Fuzzy AUTO em `nome`                                 |
-| GET    | `/produtos/busca/multicampos?termo=`  | Multi-match em `nome` e `descricao`                  |
-| GET    | `/produtos/busca/com-filtro?termo=&categoria=` | Match em descricao + filtro por categoria  |
-| GET    | `/produtos/busca/faixa-preco?min=&max=` | Range em `preco`                                   |
-| GET    | `/produtos/busca/avancada?categoria=&raridade=&min=&max=` | Booleana combinada               |
-| GET    | `/produtos/agregacoes/por-categoria`  | Contagem de docs por categoria                       |
-| GET    | `/produtos/agregacoes/por-raridade`   | Contagem de docs por raridade                        |
-| GET    | `/produtos/agregacoes/preco-medio`    | Avg do campo `preco`                                 |
-| GET    | `/produtos/agregacoes/faixas-preco`   | Range agregado (<100, 100–300, 300–700, >700)        |
+### `/api/v1/produtos` (Elasticsearch)
+| Método | Path                                            | Descrição                                            |
+|--------|-------------------------------------------------|------------------------------------------------------|
+| GET    | `/api/v1/produtos/busca/nome?termo=`            | Match no campo `nome`                                |
+| GET    | `/api/v1/produtos/busca/descricao?termo=`       | Match em `descricao`                                 |
+| GET    | `/api/v1/produtos/busca/frase?termo=`           | Match phrase exata em `descricao`                    |
+| GET    | `/api/v1/produtos/busca/fuzzy?termo=`           | Fuzzy AUTO em `nome`                                 |
+| GET    | `/api/v1/produtos/busca/multicampos?termo=`     | Multi-match em `nome` e `descricao`                  |
+| GET    | `/api/v1/produtos/busca/com-filtro?termo=&categoria=` | Match em descricao + filtro por categoria     |
+| GET    | `/api/v1/produtos/busca/faixa-preco?min=&max=`  | Range em `preco`                                     |
+| GET    | `/api/v1/produtos/busca/avancada?categoria=&raridade=&min=&max=` | Booleana combinada                  |
+| GET    | `/api/v1/produtos/agregacoes/por-categoria`     | Contagem de docs por categoria                       |
+| GET    | `/api/v1/produtos/agregacoes/por-raridade`      | Contagem de docs por raridade                        |
+| GET    | `/api/v1/produtos/agregacoes/preco-medio`       | Avg do campo `preco`                                 |
+| GET    | `/api/v1/produtos/agregacoes/faixas-preco`      | Range agregado (<100, 100–300, 300–700, >700)        |
 
 ### Tratamento de erros (formato padrão)
 ```json
@@ -396,3 +443,9 @@ springdoc.swagger-ui.tryItOutEnabled=true
 Testes presentes:
 - `Tp1GuildaApplicationTests` — smoke test de carga do contexto.
 - `audit/AuditMappingDataJpaTest` — `@DataJpaTest` validando o mapeamento das entidades de auditoria.
+
+---
+
+## Licença
+
+Distribuído sob a licença **MIT**. Veja [`LICENSE`](LICENSE) para o texto completo.

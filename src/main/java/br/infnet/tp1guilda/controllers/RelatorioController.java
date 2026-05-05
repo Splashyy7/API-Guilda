@@ -14,7 +14,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/relatorios")
+@RequestMapping("/api/v1/relatorios")
 @RequiredArgsConstructor
 @Tag(name = "Relatórios", description = "Relatórios analíticos: ranking de aventureiros e agregados de missões")
 public class RelatorioController {
