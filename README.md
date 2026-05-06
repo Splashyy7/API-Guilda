@@ -1,5 +1,6 @@
 # API-Guilda
 
+[![CI](https://github.com/Splashyy7/API-Guilda/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Splashyy7/API-Guilda/actions/workflows/ci.yml)
 [![Java 21](https://img.shields.io/badge/Java-21-007396?logo=openjdk&logoColor=white)](https://openjdk.org/projects/jdk/21/)
 [![Spring Boot 4.0.6](https://img.shields.io/badge/Spring%20Boot-4.0.6-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
